@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Feature\Feature;
 use App\Models\Feature\FeatureCategory;
-use App\Models\Feature\FeatureSubtype;
 use App\Models\Species\Species;
 use App\Models\Species\Subtype;
 use Illuminate\Support\Facades\DB;
@@ -212,7 +211,7 @@ class FeatureService extends Service {
                 if (!(isset($data['species_id']) && $data['species_id'])) {
                     throw new \Exception('Species must be selected to select a subtype.');
                 }
-                
+
                 foreach ($data['subtype_ids'] as $subtypeId) {
                     $subtype = Subtype::find($subtypeId);
                     if (!$subtype || $subtype->species_id != $data['species_id']) {
@@ -288,7 +287,7 @@ class FeatureService extends Service {
                 if (!(isset($data['species_id']) && $data['species_id'])) {
                     throw new \Exception('Species must be selected to select a subtype.');
                 }
-                
+
                 foreach ($data['subtype_ids'] as $subtypeId) {
                     $subtype = Subtype::find($subtypeId);
                     if (!$subtype || $subtype->species_id != $data['species_id']) {
