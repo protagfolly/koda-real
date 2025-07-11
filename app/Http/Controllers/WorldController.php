@@ -177,8 +177,8 @@ class WorldController extends Controller {
                 $query->doesntHave('subtypes');
             } else {
                 if (isset($data['subtype_id']) && $data['subtype_id'] != 'none') {
-                    $query->whereHas('subtypes', function ($where) use ($data) {
-                        $where->where('subtype_id', $data['subtype_id']);
+                    $query->whereHas('subtypes', function ($query) use ($data) {
+                        $query->where('subtype_id', $data['subtype_id']);
                     });
                 }
             }

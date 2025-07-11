@@ -175,8 +175,8 @@ class FeatureController extends Controller {
             $query->where('species_id', $data['species_id']);
         }
         if (isset($data['subtype_id']) && $data['subtype_id'] != 'none') {
-            $query->whereHas('subtypes', function ($where) use ($data) {
-                $where->where('subtype_id', $data['subtype_id']);
+            $query->whereHas('subtypes', function ($query) use ($data) {
+                $query->where('subtype_id', $data['subtype_id']);
             });
         }
         if (isset($data['name'])) {
