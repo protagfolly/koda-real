@@ -13,6 +13,7 @@ use App\Models\Submission\Submission;
 use App\Models\Trade;
 use App\Models\User\User;
 use App\Models\User\UserUpdateLog;
+use App\Models\User\UserQuicklink;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -317,6 +318,130 @@ class UserService extends Service {
             $user->save();
 
             return $this->commitReturn($avatar);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+    }
+
+    /**
+     * Adds a new quicklink for the user.
+     *
+     * @param array                 $data
+     * @param \App\Models\User\User $user
+     *
+     * @return bool
+     */
+    public function addQuicklink($data, $user) {
+        DB::beginTransaction();
+
+        try {
+            $quicklink = UserQuicklink::create([
+                'user_id'  => $user->id,
+                'name'     => $data['name'],
+                'url'      => $data['url'],
+            ]);
+
+            return $this->commitReturn($quicklink);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+
+        return true;
+    }
+
+    /**
+     * Edits a user's quicklink.
+     *
+     * @param array                 $data
+     * @param \App\Models\User\User $user
+     *
+     * @return bool
+     */
+    public function editQuicklink($id, $data, $user) {
+        DB::beginTransaction();
+
+        try {
+            $quicklink = UserQuicklink::find($id);
+            if (!$quicklink) {
+                throw new \Exception('Quicklink not found.');
+            }
+            if ($quicklink->user_id != $user->id) {
+                throw new \Exception('The quicklink you are trying to edit does not belong to you.');
+            }
+
+            $quicklink->name = $data['link_name'];
+            $quicklink->url = $data['link_url'];
+            $quicklink->save();
+
+            return $this->commitReturn($quicklink);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+    }
+
+    /**
+     * Deletes a user's quicklink.
+     *
+     * @param array                 $data
+     * @param \App\Models\User\User $user
+     *
+     * @return bool
+     */
+    public function deleteQuicklink($id, $user) {
+        DB::beginTransaction();
+
+        try {
+            $quicklink = UserQuicklink::find($id);
+            if (!$quicklink) {
+                throw new \Exception('Quicklink not found.');
+            }
+            if ($quicklink->user_id != $user->id) {
+                throw new \Exception('The quicklink you are trying to delete does not belong to you.');
+            }
+
+            $quicklink->delete();
+
+            return $this->commitReturn($quicklink);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+    }
+
+    /**
+     * Sorts a user's quicklinks.
+     *
+     * @param array                 $data
+     * @param \App\Models\User\User $user
+     *
+     * @return bool
+     */
+    public function sortQuicklink($data, $user) {
+        DB::beginTransaction();
+
+        try {
+            $ids = array_reverse(explode(',', $data));
+            $quicklinks = UserQuicklink::whereIn('id', $ids)->where('user_id', $user->id)->orderBy(DB::raw('FIELD(id, '.implode(',', $ids).')'))->get();
+
+            if (count($quicklinks) != count($ids)) {
+                throw new \Exception('Invalid quicklink included in sorting order.');
+            }
+
+            $count = 0;
+            foreach ($quicklinks as $quicklink) {
+                $quicklink->sort = $count;
+                $quicklink->save();
+                $count++;
+            }
+
+            return $this->commitReturn(true);
         } catch (\Exception $e) {
             $this->setError('error', $e->getMessage());
         }

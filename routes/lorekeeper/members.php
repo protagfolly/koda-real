@@ -52,6 +52,13 @@ Route::group(['prefix' => 'account', 'namespace' => 'Users'], function () {
     Route::post('bookmarks/edit/{id}', 'BookmarkController@postCreateEditBookmark');
     Route::get('bookmarks/delete/{id}', 'BookmarkController@getDeleteBookmark');
     Route::post('bookmarks/delete/{id}', 'BookmarkController@postDeleteBookmark');
+
+    // User Quicklinks
+    Route::get('quicklinks', 'AccountController@getQuicklinks');
+    Route::post('quicklinks/new', 'AccountController@postNewQuicklinks');
+    Route::post('quicklinks/edit/{id}', 'AccountController@postEditQuicklinks');
+    Route::post('quicklinks/delete/{id}', 'AccountController@postDeleteQuicklinks');
+    Route::post('quicklinks/sort', 'AccountController@postSortQuicklinks');
 });
 
 Route::group(['prefix' => 'inventory', 'namespace' => 'Users'], function () {

@@ -205,6 +205,13 @@ class User extends Authenticatable implements MustVerifyEmail {
         return $this->hasMany(CommentLike::class);
     }
 
+    /**
+     * Gets all the user's quicklinks.
+     */
+    public function quicklinks() {
+        return $this->hasMany(UserQuicklink::class);
+    }
+
     /**********************************************************************************************
 
         SCOPES
