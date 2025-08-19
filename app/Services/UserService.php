@@ -12,8 +12,8 @@ use App\Models\Rank\Rank;
 use App\Models\Submission\Submission;
 use App\Models\Trade;
 use App\Models\User\User;
-use App\Models\User\UserUpdateLog;
 use App\Models\User\UserQuicklink;
+use App\Models\User\UserUpdateLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -358,6 +358,7 @@ class UserService extends Service {
      *
      * @param array                 $data
      * @param \App\Models\User\User $user
+     * @param mixed                 $id
      *
      * @return bool
      */
@@ -388,8 +389,8 @@ class UserService extends Service {
     /**
      * Deletes a user's quicklink.
      *
-     * @param array                 $data
      * @param \App\Models\User\User $user
+     * @param mixed                 $id
      *
      * @return bool
      */

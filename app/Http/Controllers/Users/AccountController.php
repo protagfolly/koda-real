@@ -489,8 +489,6 @@ class AccountController extends Controller {
     /**
      * Creates a new quicklink for the user.
      *
-     * @param mixed $id
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postNewQuicklinks(Request $request, UserService $service) {
@@ -555,8 +553,6 @@ class AccountController extends Controller {
 
     /**
      * Sorts quicklink order for the user.
-     *
-     * @param mixed $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */

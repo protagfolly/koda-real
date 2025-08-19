@@ -28,7 +28,7 @@ class UserQuicklink extends Model {
      */
     public static $createRules = [
         'name' => 'required',
-        'url' => 'url|nullable',
+        'url'  => 'url|nullable',
     ];
 
     /**
@@ -38,7 +38,7 @@ class UserQuicklink extends Model {
      */
     public static $updateRules = [
         'link_name' => 'required',
-        'link_url' => 'url|nullable',
+        'link_url'  => 'url|nullable',
     ];
 
     /**********************************************************************************************
