@@ -142,7 +142,13 @@ class Feature extends Model {
     public function scopeSortSubtype($query) {
         $ids = Subtype::orderBy('sort', 'DESC')->pluck('id')->toArray();
 
-        return count($ids) ? $query->with('feature_subtypes')->orderBy(DB::raw('FIELD(feature_subtypes.subtype_id, '.implode(',', $ids).')')) : $query;
+        if (count($ids)) {
+            $ordered_subtypes = $this->subtypes()->latest('id')->pluck('id')->toArray();
+            foreach ($ordered_subtypes as $subtype) {
+                return $query->with('feature_subtypes')->orderBy(DB::raw($subtype.', '.implode(',', $ids).')'));
+            }
+        }
+        return $query;
     }
 
     /**
