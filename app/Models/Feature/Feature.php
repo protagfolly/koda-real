@@ -148,6 +148,7 @@ class Feature extends Model {
                 return $query->with('feature_subtypes')->orderBy(DB::raw($subtype.', '.implode(',', $ids).')'));
             }
         }
+
         return $query;
     }
 
