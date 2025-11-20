@@ -82,7 +82,7 @@ $( document ).ready(function() {
                 $cell.append($clone);
                 $clone.selectize();
             });
-        }
+            };
 
         function attachRemoveListener(node) {
             node.on('click', function(e) {
