@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    User{!! View::hasSection('profile-title') ? ' :: ' . trim(View::getSection('profile-title')) : '' !!}
+    User ::@yield('profile-title')
 @endsection
 
 @section('sidebar')
