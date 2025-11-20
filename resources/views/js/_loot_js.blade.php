@@ -1,11 +1,4 @@
 <script>
-    $(document).ready(function() {
-        var $lootTable = $('#lootTableBody');
-        var $lootRow = $('#lootRow').find('.loot-row');
-        var $itemSelect = $('#lootRowData').find('.item-select');
-        var $currencySelect = $('#lootRowData').find('.currency-select');
-        @if ($showLootTables)
-            var $tableSelect = $('#lootRowData').find('.table-select');
 $( document ).ready(function() {    
     var $lootTable  = $('#lootTableBody');
     var $lootRow = $('#lootRow').find('.loot-row');
@@ -82,7 +75,7 @@ $( document ).ready(function() {
                 $cell.append($clone);
                 $clone.selectize();
             });
-            };
+        };
 
         function attachRemoveListener(node) {
             node.on('click', function(e) {
