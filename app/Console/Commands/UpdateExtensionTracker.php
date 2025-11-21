@@ -48,7 +48,6 @@ class UpdateExtensionTracker extends Command {
             $extension = DB::table('site_extensions')->where('key', $key);
             if (!$extension->exists()) {
                 DB::table('site_extensions')->insert([
-                    'key'      => $key,
                     'wiki_key' => $data['wiki_key'],
                     'creators' => $data['creators'],
                     'version'  => $data['version'],
@@ -59,7 +58,6 @@ class UpdateExtensionTracker extends Command {
                 $confirm = $this->confirm('Do you want to update the listed version of '.$key.' to '.$data['version'].'? This will not affect any other files.');
                 if ($confirm || !app()->runningInConsole()) {
                     DB::table('site_extensions')->where('key', $key)->update([
-                        'key'      => $key,
                         'wiki_key' => $data['wiki_key'],
                         'creators' => $data['creators'],
                         'version'  => $data['version'],
