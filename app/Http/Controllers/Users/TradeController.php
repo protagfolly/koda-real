@@ -7,7 +7,7 @@ use App\Models\Character\CharacterCategory;
 use Auth;
 use Settings;
 
-
+use App\Models\Currency\Currency;
 
 
 
