@@ -33,6 +33,8 @@ class Kernel extends ConsoleKernel {
                 ->monthly();
                 $schedule->command('update-timed-daily')
                 ->everyMinute();          
+        $schedule->command('clean-donations')
+            ->everyMinute();
 
     }
 
