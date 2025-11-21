@@ -210,4 +210,11 @@ Route::group(['prefix' => 'forms'], function() {
 **************************************************************************************************/
 Route::group(['prefix' => 'terms'], function() {
     Route::get('/accept', 'TermsController@acceptTerms');
+/**************************************************************************************************
+    FAQ
+**************************************************************************************************/
+Route::group(['prefix' => 'faq',], function () {
+    Route::get('/{id?}', 'BrowseController@getFaq')->where(['id' => '[0-9]+']);
+    Route::get('/modal/{id}', 'BrowseController@getFaqQuestion')->where(['id' => '[0-9]+']);
+    Route::get('/search', 'BrowseController@getFaqSearch');
 });

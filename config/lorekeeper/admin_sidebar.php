@@ -222,6 +222,10 @@ return [
                 'name' => 'Items',
                 'url'  => 'admin/data/items',
             ],
+            [
+                'name' => 'FAQ',
+                'url'  => 'admin/data/faq',
+            ]
         ],
     ],
     'Raffles'    => [
