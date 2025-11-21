@@ -205,3 +205,9 @@ Route::group(['prefix' => 'forms'], function() {
     Route::get('{id}.{slug?}', 'SiteFormController@getSiteForm');
     Route::get('{id}.', 'SiteFormController@getSiteForm');
 });
+/**************************************************************************************************
+    Terms accept
+**************************************************************************************************/
+Route::group(['prefix' => 'terms'], function() {
+    Route::get('/accept', 'TermsController@acceptTerms');
+});

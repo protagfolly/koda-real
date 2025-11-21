@@ -352,4 +352,25 @@ return [
     |
     */
     'wysiwyg_comments'                                  => 1,
+    
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Terms Popup
+    |--------------------------------------------------------------------------
+    |
+    | Defines the content of the terms popup that appears on your site. 
+    | For the text field, some html is fine.
+    |
+    | 0: do not show terms popup ever. 
+    | 1: Show terms popup until the visitor or user agreed.
+    */
+
+    'show_terms_popup' => 1,
+    'terms_popup' => [
+        "title" => "Wait a second!", 
+        "text" => "This is a popup to remind you that this site is not for everybody. By proceeding, you agree to follow the site terms and let us know that you read this message.", 
+        "button" => "Accept"
+    ],
 ];
