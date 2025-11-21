@@ -20,8 +20,9 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Honeypot\ProtectAgainstSpam;
 use App\Models\Forms\SiteForm;
+use App\Models\TradeListing;
 
-class CommentController extends Controller {
+class CommentController extends Controller implements CommentControllerInterface {
     public function __construct() {
         $this->middleware('web');
 
@@ -137,6 +138,12 @@ class CommentController extends Controller {
                 $recipient = User::find(Settings::get('admin_user'));
                 $post = 'your site page';
                 $link = $page->url.'/#comment-'.$comment->getKey();
+                break;
+            case 'App\Models\TradeListing':
+                $listing = TradeListing::find($comment->commentable_id);
+                $recipient = $listing->user;
+                $post = 'your trade listing';
+                $link = $listing->url . '/#comment-' . $comment->getKey();
                 break;
             case 'App\Models\Gallery\GallerySubmission':
                 $submission = GallerySubmission::find($comment->commentable_id);
