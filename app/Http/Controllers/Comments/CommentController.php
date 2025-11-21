@@ -21,8 +21,9 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Honeypot\ProtectAgainstSpam;
 use App\Models\Forms\SiteForm;
 use App\Models\TradeListing;
+use App\Http\Controllers\Comments\CommentControllerInterface;
 
-class CommentController extends Controller implements CommentControllerInterface {
+class CommentController extends Controller  {
     public function __construct() {
         $this->middleware('web');
 
