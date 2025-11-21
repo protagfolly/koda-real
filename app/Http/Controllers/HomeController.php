@@ -6,6 +6,12 @@ use App\Models\Gallery\GallerySubmission;
 use App\Models\SitePage;
 use App\Services\LinkService;
 use App\Services\UserService;
+use App\Services\DeviantArtService;
+use Config;
+use Carbon\Carbon;
+use App\Models\Character\Character;
+use Settings;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +33,14 @@ class HomeController extends Controller {
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function getIndex() {
-        if (config('lorekeeper.extensions.show_all_recent_submissions.enable')) {
+        
+    if(Settings::get('featured_character')) {
+            $character = Character::find(Settings::get('featured_character'));
+        }
+        else $character = null;
+    
+    
+    if (config('lorekeeper.extensions.show_all_recent_submissions.enable')) {
             $query = GallerySubmission::visible(Auth::check() ? Auth::user() : null)->accepted()->orderBy('created_at', 'DESC');
             $gallerySubmissions = $query->get()->take(8);
         } else {
@@ -37,6 +50,7 @@ class HomeController extends Controller {
         return view('welcome', [
             'about'               => SitePage::where('key', 'about')->first(),
             'gallerySubmissions'  => $gallerySubmissions,
+            'featured' => $character,
         ]);
     }
 

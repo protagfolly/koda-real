@@ -77,6 +77,7 @@ class AddSiteSettings extends Command {
         $this->addSiteSetting('birthday_item', 1, 'ID of item to be granted to a user on their birth month. Suggestion is to set this to a box type item.');
         $this->addSiteSetting('default_theme', 0, 'ID of the default theme users should see. 0: Disabled, shows default lorekeeper. This setting is overwritten by the users theme setting.');
          $this->addSiteSetting('trade_listing_duration', 14, 'Number of days a trade listing is displayed for.');
+         $this->addSiteSetting('featured_character', 1, 'ID of the currently featured character.');
 
 
         $this->addSiteSetting('deactivated_privacy', 0, 'Who can view the deactivated list? 0: Admin only, 1: Staff only, 2: Members only, 3: Public.');
