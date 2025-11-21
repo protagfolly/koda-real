@@ -19,6 +19,7 @@ use App\Models\Notification;
 use App\Models\ThemeEditor;
 
 
+use App\Models\User\UserQuicklink;
 use App\Services\LinkService;
 use App\Services\UserService;
 use BaconQrCode\Renderer\Color\Rgb;
@@ -570,6 +571,97 @@ class AccountController extends Controller {
     public function postReactivate(Request $request, UserService $service) {
         if ($service->reactivate(Auth::user(), null)) {
             flash('You have reactivated successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Show a user's quicklinks page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getQuicklinks() {
+        return view('account.quicklinks');
+    }
+
+    /**
+     * Creates a new quicklink for the user.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postNewQuicklinks(Request $request, UserService $service) {
+        $request->validate(UserQuicklink::$createRules);
+        $data = $request->only([
+            'name', 'url',
+        ]);
+
+        if ($service->addQuicklink($data, Auth::user())) {
+            flash('Quicklink added successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Edits an existing quicklink for the user.
+     *
+     * @param mixed $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postEditQuicklinks(Request $request, UserService $service, $id) {
+        $request->validate(UserQuicklink::$updateRules);
+        $data = $request->only([
+            'link_name', 'link_url',
+        ]);
+
+        if ($service->editQuicklink($id, $data, Auth::user())) {
+            flash('Quicklink edited successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Deletes a quicklink for the user.
+     *
+     * @param mixed $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postDeleteQuicklinks(UserService $service, $id) {
+        if ($service->deleteQuicklink($id, Auth::user())) {
+            flash('Quicklink deleted successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Sorts quicklink order for the user.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postSortQuicklinks(Request $request, UserService $service) {
+        if ($service->sortQuicklink($request->get('sort'), Auth::user())) {
+            flash('Quicklink edited successfully.')->success();
         } else {
             foreach ($service->errors()->getMessages()['error'] as $error) {
                 flash($error)->error();

@@ -206,6 +206,18 @@
                             <a class="dropdown-item" href="{{ url('account/settings') }}">
                                 Settings
                             </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ url('account/quicklinks') }}">
+                                Quicklinks
+                            </a>
+                            @if (Auth::user()->quicklinks()->count())
+                                @foreach (Auth::user()->quicklinks()->orderBy('sort', 'DESC')->get() as $quicklink)
+                                    <a class="dropdown-item" href="{{ $quicklink->url }}">
+                                        {{ $quicklink->name }}
+                                    </a>
+                                @endforeach
+                            @endif
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

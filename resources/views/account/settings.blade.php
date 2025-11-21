@@ -1,4 +1,4 @@
-0@extends('account.layout')
+@extends('account.layout')
 
 @section('account-title')
     Settings
