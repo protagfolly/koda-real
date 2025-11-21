@@ -114,8 +114,6 @@
 
     <!--Editable font css-->
     @include('layouts.editable_fonts') 
-        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-    @endif
 
     @if ($theme?->prioritize_css)
         @include('layouts.editable_theme')
@@ -243,43 +241,7 @@
                 $('[data-toggle="tooltip"]').tooltip({
                     html: true
                 });
-
-                class BlurValid extends $.colorpicker.Extension {
-                    constructor(colorpicker, options = {}) {
-                        super(colorpicker, options);
-
-                        if (this.colorpicker.inputHandler.hasInput()) {
-                            const onBlur = function(colorpicker, fallback) {
-                                return () => {
-                                    colorpicker.setValue(colorpicker.blurFallback._original.color);
-                                }
-                            };
-                            this.colorpicker.inputHandler.input[0].addEventListener('blur', onBlur(this.colorpicker));
-                        }
-                    }
-
-                    onInvalid(e) {
-                        const color = this.colorpicker.colorHandler.getFallbackColor();
-                        if (color._original.valid)
-                            this.colorpicker.blurFallback = color;
-                    }
-                }
-
-                $.colorpicker.extensions.blurvalid = BlurValid;
-                console.log($['colorpicker'].extensions);
-
-
-
-                $('.cp').colorpicker({
-                    'autoInputFallback': false,
-                    'autoHexInputFallback': false,
-                    'format': 'auto',
-                    'useAlpha': true,
-                    extensions: [{
-                        name: 'blurValid'
-                    }]
-                });
-
+                $('.cp').colorpicker();
                 tinymce.init({
                     selector: '.wysiwyg',
                     height: 500,
