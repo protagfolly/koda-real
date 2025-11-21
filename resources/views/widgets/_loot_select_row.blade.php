@@ -6,6 +6,7 @@
         ->orderBy('sort_character', 'DESC')
         ->pluck('name', 'id');
     $items = \App\Models\Item\Item::orderBy('name')->pluck('name', 'id');
+    $awards = \App\Models\Award\Award::orderBy('name')->pluck('name', 'id');
     $currencies = \App\Models\Currency\Currency::where('is_user_owned', 1)
         ->orderBy('name')
         ->pluck('name', 'id');
