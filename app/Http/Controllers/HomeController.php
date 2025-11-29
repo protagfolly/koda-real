@@ -53,6 +53,7 @@ class HomeController extends Controller {
             'gallerySubmissions'  => $gallerySubmissions,
             'featured' => $character,
             'featured_affiliates' => Affiliate::where('status','Accepted')->featured(1)->get(),
+            'affiliates' => Affiliate::where('status','Accepted')->featured(0)->inRandomOrder()->limit(10)->get(),
         ]);
     }
 
