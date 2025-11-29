@@ -54,6 +54,7 @@ class HomeController extends Controller {
             'featured' => $character,
             'featured_affiliates' => Affiliate::where('status','Accepted')->featured(1)->get(),
             'affiliates' => Affiliate::where('status','Accepted')->featured(0)->inRandomOrder()->limit(10)->get(),
+            'open' => intval(Settings::get('affiliates_open')),
         ]);
     }
 
